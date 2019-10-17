@@ -1,15 +1,36 @@
-name: Publish Gatsby Site
+name: "Publish Gatsby Site"
+branding:
+  icon: "cpu"
+  color: "white"
+
+inputs:
+  repo:
+    required: true
+  dev-branch:
+    required: true
+  publish-branch:
+    required: true
+  token:
+    required: true
+  name:
+    required: true
+  email:
+    required: true
 
 on:
   push:
     branches:
-      - gatsby-dev
+      - ${dev-branch}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+        with:
+          repository: ${repo}
+          ref: ${dev-branch}
+          token: ${token}
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
@@ -18,4 +39,4 @@ jobs:
       - run: gatsby telemetry --disable
       - run: yarn
       - run: gatsby build
-      - run: yarn run gh-pages -d public -b master -u 'Zhiyuan Zheng <me@xmflsct.com>' -r https://${{ secrets.PAT }}@github.com/xmflsct/roundandround.github.io.git -m 'Build of ${{ github.sha }}'
+      - run: yarn run gh-pages -d public -b ${publish-branch} -u '${name} <${email}>' -r https://${token}@github.com/${repo}.git -m 'Build of ${{ github.sha }}'
