@@ -1,43 +1,24 @@
-name: "Publish Gatsby Site"
-description: "Publish Gatsby generated site to GitHub Pages using https://www.npmjs.com/package/gh-pages"
+name: 'Publish Gatsby Site'
+description: 'Publish Gatsby generated site to GitHub Pages using https://www.npmjs.com/package/gh-pages'
 branding:
-  icon: "cpu"
-  color: "white"
+  icon: 'cpu'
+  color: 'white'
 
 inputs:
-  repo:
-    required: true
-  dev-branch:
-    required: true
-  publish-branch:
-    required: true
+  publishBranch:
+    default: 'master'
   token:
     required: true
   name:
-    required: true
+    default: 'Zhiyuan Zheng'
   email:
-    required: true
+    default: 'me@xmflsct.com'
 
-on:
-  push:
-    branches:
-      - ${dev-branch}
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-        with:
-          repository: ${repo}
-          ref: ${dev-branch}
-          token: ${token}
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm install -g gatsby-cli
-      - run: gatsby telemetry --disable
-      - run: yarn
-      - run: gatsby build
-      - run: yarn run gh-pages -d public -b ${publish-branch} -u '${name} <${email}>' -r https://${token}@github.com/${repo}.git -m 'Build of ${{ github.sha }}'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.publish-branch }}
+    - ${{ inputs.token }}
+    - ${{ inputs.name }}
+    - ${{ inputs.email }}
