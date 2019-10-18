@@ -1,4 +1,5 @@
 name: "Publish Gatsby Site"
+description: "Publish Gatsby generated site to GitHub Pages using https://www.npmjs.com/package/gh-pages"
 branding:
   icon: "cpu"
   color: "white"
