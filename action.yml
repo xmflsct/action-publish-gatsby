@@ -1,4 +1,5 @@
 name: 'Publish Gatsby Site'
+author: 'Zhiyuan Zheng'
 description: 'Publish Gatsby generated site to GitHub Pages using https://www.npmjs.com/package/gh-pages'
 branding:
   icon: 'cpu'
@@ -6,12 +7,16 @@ branding:
 
 inputs:
   publishBranch:
+    description: 'The branch that GitHub Pages is being exposed to.'
     default: 'master'
   token:
+    description: 'Personal Access Token in order to publish to GitHub Pages.'
     required: true
   name:
+    description: 'Your name to include in the commit.'
     default: 'Zhiyuan Zheng'
   email:
+    description: 'Your email to include in the commit.'
     default: 'me@xmflsct.com'
 
 runs:
