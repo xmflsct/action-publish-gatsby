@@ -22,3 +22,5 @@ runs:
     - ${{ inputs.token }}
     - ${{ inputs.name }}
     - ${{ inputs.email }}
+    - ${{ GITHUB_REPOSITORY }}
+    - ${{ GITHUB_SHA }}
